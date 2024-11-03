@@ -1,5 +1,4 @@
 
-
 ```markdown
 # MAC Address Changer
 
@@ -23,12 +22,12 @@ A Python script to change the MAC address of a specified network interface. This
 2. Run the script with administrative privileges to change the MAC address.
 
 ```bash
-sudo python3 mac_changer.py -i <interface> -m <new_mac_address>
+sudo python3 spoofmac.py -i <interface> -m <new_mac_address>
 ```
 
 Example:
 ```bash
-sudo python3 mac_changer.py -i eth0 -m 00:22:44:66:88:10
+sudo python3 spoofmac.py -i eth0 -m 00:22:44:66:88:10
 ```
 
 ## Code Breakdown
@@ -71,8 +70,4 @@ Changing MAC address of eth0 to 00:aa:bb:cc:dd:ee
 MAC address successfully changed to 00:aa:bb:cc:dd:ee
 ```
 
-## License
-
-This project is licensed under the MIT License.
-```
 
