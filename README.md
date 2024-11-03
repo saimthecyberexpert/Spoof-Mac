@@ -1,26 +1,78 @@
-# Spoof-Mac
 
-Code Breakdown:
-Imports:
 
-The script imports the subprocess module to execute system commands and the optparse module to handle command-line arguments.
-Function mac_changer(interface, new_mac):
+```markdown
+# MAC Address Changer
 
-This function takes two parameters: the network interface (e.g., eth0) and the new MAC address.
-It changes the MAC address in three steps:
-Disable the Interface: Uses subprocess.call() to bring the interface down.
-Change the MAC Address: Executes a command to set the new MAC address.
-Re-enable the Interface: Brings the interface back up.
-A success message is printed after the MAC address has been changed.
-Function get_arguments():
+A Python script to change the MAC address of a specified network interface. This tool is helpful for testing, security, and privacy purposes.
 
-This function sets up the command-line argument parser.
-It defines two options:
--i or --interface: Specifies the network interface.
--m or --mac: Specifies the new MAC address.
-If the user does not provide the required arguments, an error message is displayed.
-Execution:
+## Features
 
-The script retrieves command-line arguments and calls the mac_changer function with the provided options.
-Security Consideration:
-I focused on security in this code. By using a list in the subprocess.call() method, I prevent users from executing additional commands. For example, if a user enters eth0;ls, it would expose sensitive information. Addressing these small vulnerabilities is crucial for maintaining system integrity. 🛡️
+- Changes the MAC address of a specified network interface (e.g., `eth0`).
+- Validates user input and provides helpful error messages.
+- Retrieves the current MAC address and confirms if it successfully changed.
+- **Security**: Uses safe methods to avoid command injection vulnerabilities.
+
+## Requirements
+
+- **Python 3**
+- **Admin Privileges**: This script requires `sudo` to execute commands on the network interface.
+
+## Usage
+
+1. Clone this repository or download the script.
+2. Run the script with administrative privileges to change the MAC address.
+
+```bash
+sudo python3 mac_changer.py -i <interface> -m <new_mac_address>
+```
+
+Example:
+```bash
+sudo python3 mac_changer.py -i eth0 -m 00:22:44:66:88:10
+```
+
+## Code Breakdown
+
+### Imports
+
+- **`subprocess`**: Executes system commands to manage network settings.
+- **`optparse`**: Parses command-line arguments.
+- **`re`**: Uses regular expressions to locate MAC addresses.
+
+### Functions
+
+- **`get_arguments()`**: 
+  - Sets up and validates command-line arguments.
+  - Defines options:
+    - `-i` or `--interface`: Network interface to modify.
+    - `-m` or `--mac`: New MAC address for the interface.
+  - Returns errors if required arguments are missing.
+
+- **`mac_changer(interface, new_mac)`**:
+  - Disables the network interface to avoid connectivity issues.
+  - Sets the new MAC address.
+  - Re-enables the interface to restore connectivity.
+  - Prints a success message after completion.
+
+- **`get_current_mac(interface)`**:
+  - Retrieves and displays the current MAC address of the specified interface.
+  - Uses a regular expression to ensure only MAC address format (e.g., `00:22:44:66:88:10`) is captured.
+
+### Security Considerations
+
+- **Command Injection Prevention**: By using a list format in `subprocess.call()` and `subprocess.check_output()`, this script avoids security risks associated with command injection. For instance, if the user inputs `eth0; ls`, the script won’t execute unintended commands.
+- **Regex Validation**: Extracts only the MAC address format, filtering out invalid inputs.
+
+## Example Output
+
+```plaintext
+Current MAC: 00:22:44:66:88:10
+Changing MAC address of eth0 to 00:aa:bb:cc:dd:ee
+MAC address successfully changed to 00:aa:bb:cc:dd:ee
+```
+
+## License
+
+This project is licensed under the MIT License.
+```
+
